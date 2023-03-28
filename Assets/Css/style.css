@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    font-family: 'Nunito', sans-serif;
+    color: beige;
+ }
+/* Background Img */
+body{
+    background-image: url(https://images.pexels.com/photos/50859/pexels-photo-50859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background: size cover;
+    background-repeat: no-repeat;
+}
+
+ /* Creating header of webpage */
+ .dashboard{
+    padding-bottom: 120px;
+ }
