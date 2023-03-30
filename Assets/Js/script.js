@@ -11,7 +11,7 @@ var searchBtn=document.querySelector('.search');
 
 // Fetch the geolocation
 function getGeoLocation(){
-var geoLocationAPI="http://api.openweathermap.org/geo/1.0/direct?q=London&limit=1&appid=8052fe1a5f6b6e4f4d138051e243f44e";
+var geoLocationAPI="http://api.openweathermap.org/geo/1.0/direct?q=Denver&limit=1&appid=8052fe1a5f6b6e4f4d138051e243f44e";
 fetch(geoLocationAPI)
 .then(function(response){
 // console.log(response);
@@ -41,7 +41,13 @@ fetch(weatherAPI)
 // Save text value of search and save it into local storage within the Array
 searchBtn.addEventListener('click', function(getGeoLocation){
     var city=document.querySelector('#city');
-    var savedCity=city.value;
-    getGeoLocation(city.value);
-    console.log(savedCity);
+    var savedCity=document.querySelector('.textVal').value;
+    city.textContent=savedCity;
+    if (city===""){
+        return;
+    } 
+    cityHistArr.push(savedCity);
+    localStorage.setItem('city', JSON.stringify(cityHistArr));
+    savedHistory();
+    getWeatherInfo();
 })
