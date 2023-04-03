@@ -1,11 +1,11 @@
 // Defining Variables
-var currentDate=document.querySelector('.date');
+var currentDate=('.date');
 var date=dayjs().format('MMMM/DD/YYYY');
-var currentTime=document.querySelector('.time');
+var currentTime=$('.time');
 var time=dayjs().format('h:mm a');
 var cityHistArr=[];
-var searchBtn=document.querySelector('.search');
-
+var searchBtn=$('.search');
+var fiveDayForecast=$('five-day-forecast');
 
 // Fetch the geolocation
 function getGeoLocation(city){
@@ -18,7 +18,7 @@ return response.json()
 .then(function(data){
     // console.log(data[0].lat);
     // console.log(data[0].lon);
-    // passing the value from function getGeoLocation into function getWeatherInfo
+// passing the value from function getGeoLocation into function getWeatherInfo
     getWeatherInfo(data[0].lat,data[0].lon);
 })};
 
@@ -37,7 +37,7 @@ function getWeatherInfo(latitude,longitude){
 }
 
 // Save text value of search and save it into local storage within the Array
-searchBtn.addEventListener('click', function(event){
+searchBtn.on('click', function(event){
     event.preventDefault();
     var city=document.querySelector('#city');
     var savedCity=document.querySelector('.textVal').value;
