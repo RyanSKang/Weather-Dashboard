@@ -1,5 +1,5 @@
 // Defining Variables
-var currentDate=('.date');
+var currentDate=$('.date');
 var date=dayjs().format('MMMM/DD/YYYY');
 var currentTime=$('.time');
 var time=dayjs().format('h:mm a');
@@ -50,7 +50,9 @@ searchBtn.on('click', function(event){
     localStorage.setItem('city', JSON.stringify(cityHistArr));
     savedHistory();
     getWeatherInfo();
-})
+}) 
+
+// btn click function
 
 // Create buttons from saved text value that also acts as a search button based on history search
 var cityHistEl=$('.city-history');
@@ -58,14 +60,14 @@ function savedHistory(){
     cityHistEl.empty();
 
     var savedHist=localStorage.getItem("city");
+    console.log(savedHist);
+    savedHist=JSON.parse(savedHist);
     for (i=0; i<cityHistArr.length; i++){
-    var rowEl=$('<row>');
-    var buttonEl=$("<button>").text(savedHist[i]);
-    buttonEl.attr('type', 'button');
-
-    cityHistEl.prepend(rowEl);
-    rowEl.append(buttonEl);
-    buttonEl.on('click', getWeatherInfo);
-    buttonEl.append(cityHistEl);
+        console.log(savedHist[i]);
+        cityHistEl.append('<li><button class="btnHist">' + savedHist[i] + "</button></li>");
     }
+
+    // this is where i select btn hist
+    
+    // event listener that runs btn click function
 }
