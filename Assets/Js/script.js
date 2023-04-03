@@ -117,19 +117,22 @@ function getFiveDayForecast(){
 
     // Create an Object with desired weather information on each forecast card
         $.each(fiveDayArr, function(index,data){
+            // console.log((data.dt_txt).split(' '));
+            var dateVariable=data.dt_txt.split(' ')
             dataObj={
-               date: data.list.dt_text[0],
-               time: data.list.dt_text[1],
-               temp: data.list.main.temp,
-               feels_like: data.list.main.feels_like,
-               icon: data.list.weather[0].icon,
-               humidity: data.list.main.humidity,
+               date: dateVariable[0],
+               time: dateVariable[1],
+               temp: data.main.temp,
+               feels_like: data.main.feels_like,
+               icon: data.weather[0].icon,
+               humidity: data.main.humidity,
             }
             // console.log(dataObj);
-        if (data.list.dt_text == "12:00:00"){
+        if (dateVariable[1] === "12:00:00"){
             weatherForecast.push[dataObj];
         }    
         })
+
     //Display cards to screen
     for(i=0; i<weatherForecast.length; i++){
 
