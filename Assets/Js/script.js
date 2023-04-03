@@ -10,6 +10,8 @@ var time=dayjs().format('h:mm a');
 var cityHistArr=[];
 var searchBtn=$('.search');
 var fiveDayForecast=$('five-day-forecast');
+var icons=$('.icons');
+var description=$('.icon-description');
 
 // Fetch the geolocation
 // function getGeoLocation(city){
@@ -43,7 +45,7 @@ var fiveDayForecast=$('five-day-forecast');
 
 
 // get the main "Today" cardbody
-var cardbody=$('.cardBodyToday');
+var cardbody=$('.weatherInfo');
 
 // Display the weather data to main Today cardbody and display five day forecast
 
@@ -57,15 +59,16 @@ function getWeatherInfo(){
     .then(function(response){
         console.log(response);
         return response.json();
-        cityName.html(response.name);
     })
     .then(function(data){
         console.log(data);
+        cityName.text(data[0].name);
     })
     
     // Fetching WeatherAPI
     
-    var getCurrentWeatherURL="https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid="+key;
+    var getCurrentWeatherURL="https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&units=imperial&appid="+key;
+    
     fetch(getCurrentWeatherURL)
     .then(function(response){
         console.log(response);
@@ -73,15 +76,68 @@ function getWeatherInfo(){
     })
     .then(function(data){
         console.log(data);
+        // Display Icons
+        icons.attr('src',`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+        // Display Description of Icon
+        description.append('<li class=description>'+ data.weather[0].description + "</li>");
+        // Display Temperature
+        cardbody.append('Temperature: '+'<li class=weatherData>'+ data.main.temp + '</li>'+ '°F');
+        // Display Feels Like
+        cardbody.append('Feels Like: '+'<li class=weatherData>'+ data.main.feels_like + '</li>'+ '°F');
+        // Display Humidity
+        cardbody.append('Humidity: '+'<li class=weatherData>'+ data.main.humidity + '</li>'+ '°F');
+        // Display WindSpeed
+        cardbody.append('Wind Speed: '+'<li class=weatherData>'+ data.wind.speed + '</li>'+ 'mph');
     })
     
     // Displaying information on main Cardbody
-    
+
     var TodaysDate=$('.date').text(date);
+    currentTime.text(time);
 
+    // Calling FiveDayForecast Function
 
+    getFiveDayForecast();
     }
-getWeatherInfo();
+
+// FiveDayForecast Function
+function getFiveDayForecast(){
+    var fiveDayForecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
+
+    // Fetch five day forecast URL
+    fetch(fiveDayForecastURL)
+    .then(function(response){
+        console.log(response);
+        return response.json();
+    })
+    .then(function(data){
+        console.log(data); 
+        var fiveDayArr=data.list;
+        var weatherForecast=[];
+
+    // Create an Object with desired weather information on each forecast card
+        $.each(fiveDayArr, function(index,value){
+            dataObj={
+               date: value.dt_text.split('')[0],
+               time: value.dt_text.split('')[1],
+               temp: value.main.temp,
+               feels_like: value.main.feels_like,
+               icon: value.weather[0].icon,
+               humidity: value.main.humidity,
+            }
+        if (value.dt_text.split('')[1] === "12:00:00"){
+            weatherForecast.push[dataObj];
+        }    
+        })
+    //Display cards to screen
+    for(i=0; i<weatherForecast.length; i++){
+
+        var divEl=$('<div class=fiveDayForecastCards>');
+
+
+    } 
+    })
+}
 
 // Save text value of search and save it into local storage within the Array
 searchBtn.on('click', function(event){
@@ -96,7 +152,7 @@ searchBtn.on('click', function(event){
     cityHistArr.push(savedCity);
     localStorage.setItem('city', JSON.stringify(cityHistArr));
     savedHistory();
-    // getWeatherInfo();
+    getWeatherInfo();
 }) 
 
 // Saved History button Function defined
