@@ -1,5 +1,3 @@
-// Linking weather API
-
 // Defining Variables
 var currentDate=document.querySelector('.date');
 var date=dayjs().format('MMMM/DD/YYYY');
@@ -40,6 +38,7 @@ function getWeatherInfo(latitude,longitude){
 
 // Save text value of search and save it into local storage within the Array
 searchBtn.addEventListener('click', function(event){
+    event.preventDefault();
     var city=document.querySelector('#city');
     var savedCity=document.querySelector('.textVal').value;
     getGeoLocation(city.value);
@@ -56,24 +55,17 @@ searchBtn.addEventListener('click', function(event){
 // Create buttons from saved text value that also acts as a search button based on history search
 var cityHistEl=$('.city-history');
 function savedHistory(){
+    cityHistEl.empty();
+
     var savedHist=localStorage.getItem("city");
     for (i=0; i<cityHistArr.length; i++){
-    //     var rowEl=document.getElementsByName("row");
-    //     var btnEl=document.getElementsByName("button");
-    //     btnEl.textContent=savedHist[i];
+    var rowEl=$('<row>');
+    var buttonEl=$("<button>").text(savedHist[i]);
+    buttonEl.attr('type', 'button');
 
-    //     rowEl.classList.add('histBtnRow');
-    //     btnEl.classList.add('btn btn-outline-secondary histBtn');
-    //     btnEl.setAttribute('type', 'button');
-
-    //     savedHist.prepend(rowEl);
-    //     rowEl.append(btnEl);        
-    // } if (!city){
-    //     return;
-    // }
-    var button=$("<button>");
-    button.text(savedHist[i]);
-    button.on('click', getWeatherInfo);
-    button.append(cityHistEl);
+    cityHistEl.prepend(rowEl);
+    rowEl.append(buttonEl);
+    buttonEl.on('click', getWeatherInfo);
+    buttonEl.append(cityHistEl);
     }
 }
