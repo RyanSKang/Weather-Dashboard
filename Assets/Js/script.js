@@ -127,7 +127,7 @@ function getFiveDayForecast(){
                icon: data.weather[0].icon,
                humidity: data.main.humidity,
             }
-            // console.log(dataObj);
+            console.log(dataObj);
         if (dateVariable[1] === "12:00:00"){
             weatherForecast.push[dataObj];
         }    
