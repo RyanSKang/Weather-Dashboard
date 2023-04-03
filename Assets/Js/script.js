@@ -9,7 +9,7 @@ var currentTime=$('.time');
 var time=dayjs().format('h:mm a');
 var cityHistArr=[];
 var searchBtn=$('.search');
-var fiveDayForecast=$('five-day-forecast');
+var fiveDayForecast=$('.five-day-forecast');
 var icons=$('.icons');
 var description=$('.icon-description');
 
@@ -85,7 +85,7 @@ function getWeatherInfo(){
         // Display Feels Like
         cardbody.append('Feels Like: '+'<li class=weatherData>'+ data.main.feels_like + '</li>'+ '°F');
         // Display Humidity
-        cardbody.append('Humidity: '+'<li class=weatherData>'+ data.main.humidity + '</li>'+ '°F');
+        cardbody.append('Humidity: '+'<li class=weatherData>'+ data.main.humidity + '</li>'+ '%');
         // Display WindSpeed
         cardbody.append('Wind Speed: '+'<li class=weatherData>'+ data.wind.speed + '</li>'+ 'mph');
     })
@@ -116,24 +116,51 @@ function getFiveDayForecast(){
         var weatherForecast=[];
 
     // Create an Object with desired weather information on each forecast card
-        $.each(fiveDayArr, function(index,value){
+        $.each(fiveDayArr, function(index,data){
             dataObj={
-               date: value.dt_text.split('')[0],
-               time: value.dt_text.split('')[1],
-               temp: value.main.temp,
-               feels_like: value.main.feels_like,
-               icon: value.weather[0].icon,
-               humidity: value.main.humidity,
+               date: data.list.dt_text[0],
+               time: data.list.dt_text[1],
+               temp: data.list.main.temp,
+               feels_like: data.list.main.feels_like,
+               icon: data.list.weather[0].icon,
+               humidity: data.list.main.humidity,
             }
-        if (value.dt_text.split('')[1] === "12:00:00"){
+            // console.log(dataObj);
+        if (data.list.dt_text == "12:00:00"){
             weatherForecast.push[dataObj];
         }    
         })
     //Display cards to screen
     for(i=0; i<weatherForecast.length; i++){
 
-        var divEl=$('<div class=fiveDayForecastCards>');
+        var divEl=$('<div>');
+            divEl.attr('class', 'card text-white bg-primary mb-3 fiveDayForecastCards');
+		    divEl.attr('style', 'max-width: 200px;');
+		    fiveDayForecast.append(divEl);
 
+        var divElHeader = $('<div>');
+			divElHeader.attr('class', 'card-header')
+			var m = moment(`${weatherForecast[i].date}`).format('MMMM D, YYYY');
+			divElHeader.text(m);
+			divElCard.append(divElHeader)
+
+		var divElBody = $('<div>');
+			divElBody.attr('class', 'card-body');
+			divElCard.append(divElBody);
+
+		var divElIcon = $('<img>');
+			divElIcon.attr('class', 'icons');
+			divElIcon.attr('src', `https://openweathermap.org/img/wn/${weatherForecast[i].icon}@2x.png`);
+			divElBody.append(divElIcon);
+
+        //Display Temp in forecast Card
+        divElBody.append('<p class=forecastTemp>' + weatherForecast[i].temp + "°F")
+		
+        //Display Feels_like in forecast card
+        divElBody.append('<p class=forecastFeelsLike>' + weatherForecast[i].feels_like + "°F")
+
+		//Display humidity in forecast card
+        divElBody.append('<p class=forecastHumidity>' + weatherForecast[i].humidity + "%")
 
     } 
     })
