@@ -1,13 +1,7 @@
 /* General styling */
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    font-family: 'Nunito', sans-serif;
- }
 /* Background Img */
 body{
-    background-image: url(https://images.pexels.com/photos/50859/pexels-photo-50859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-image: url("/Assets/Photos/mountain-background.jpeg");
     background-size:cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -25,11 +19,11 @@ body{
 
  /* Styling the search input and history */
  .search-input{
-display: flex;
-flex-wrap: wrap;
-font-size: 25px;
-padding: 5px;
-margin-left: 2%;
+   display: flex;
+   flex-wrap: wrap;
+   font-size: 25px;
+   padding: 5px;
+   margin-left: 2%;
  }
  .search-input input{
     background-color: #000000;
@@ -53,6 +47,7 @@ margin-left: 2%;
     color: beige;
     margin-left: 5%;
  }
+ 
 
  /* Main Weather Card */
  .mainWeather{

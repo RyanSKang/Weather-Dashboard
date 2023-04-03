@@ -51,3 +51,29 @@ searchBtn.addEventListener('click', function(getGeoLocation){
     savedHistory();
     getWeatherInfo();
 })
+
+// Create buttons from saved text value that also acts as a search button based on history search
+var savedHist=document.querySelector('.city-history');
+function savedHistory(){
+    for (i=0; i<cityHistArr.length; i++){
+        var rowEl=document.querySelector("row");
+        var btnEl=document.querySelector("button");
+        btnEl.textContent=savedHist[i];
+        rowEl.classList.add('histBtnRow');
+        btnEl.classList.add('histBtn');
+        btnEl.setAttribute('type', 'button');
+
+        savedHist.prepend(rowEl);
+        rowEl.append(btnEl);        
+    } if (!city){
+        return;
+    }
+
+// Allows the button to be used as a search from history
+var histBtn=document.querySelector('.histBtnRow');
+histBtn.addEventListener('click', function(event){
+    console.log('saved history list');
+    event.preventDefault();
+
+}) 
+}
