@@ -37,7 +37,7 @@ function getWeatherInfo(city){
     })
     getFiveDayForecast(city);
 }
-    
+
 function weatherAPI(lat, lon){
     var getCurrentWeatherURL="https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid="+key;
     
@@ -50,7 +50,7 @@ function weatherAPI(lat, lon){
     .then(function(data){
         cardbody.empty();
         description.empty();
-
+        
         console.log(data);
         // Display Icons
         icons.attr('src',`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
@@ -67,7 +67,7 @@ function weatherAPI(lat, lon){
     })
     
     // Displaying information on main Cardbody
-
+    
     var TodaysDate=$('.date').text(date);
     currentTime.text(time);
 }
@@ -75,7 +75,7 @@ function weatherAPI(lat, lon){
 // FiveDayForecast Function
 function getFiveDayForecast(city){
     var fiveDayForecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
-
+    
     // Fetch five day forecast URL
     fetch(fiveDayForecastURL)
     .then(function(response){
@@ -86,96 +86,102 @@ function getFiveDayForecast(city){
         console.log(data, " data inside .Then ----"); 
         var fiveDayArr=data.list;
         var weatherForecast=[];
-
-
-    //Display cards to screen
-    fiveDayForecast.empty();
-    
-    // Increment of 8 for loop gave me consistent data taken at 12:00:00 time for each day
-
-    for(i=3; i<=39; i+=8){
-
-        var forecastDate=data.list[i].dt_txt.split(' ')[0];
+        
+        
+        //Display cards to screen
+        fiveDayForecast.empty();
+        
+        // Increment of 8 for loop gave me consistent data taken at 12:00:00 time for each day
+        
+        for(i=3; i<=39; i+=8){
+            
+            var forecastDate=data.list[i].dt_txt.split(' ')[0];
             forecastDate=dayjs(forecastDate).format('MMMM D, YYYY');
-
-        var divEl=$('<div>');
+            
+            var divEl=$('<div>');
             divEl.attr('class', 'card mb-3 fiveDayForecastCards');
 		    divEl.attr('style', 'max-width: 200px;');
 		    fiveDayForecast.append(divEl);
-
-        var divElHeader = $('<div>');
+            
+            var divElHeader = $('<div>');
 			divElHeader.attr('class', 'card-header');
 			divEl.append(divElHeader);
-
-		var divElBody = $('<div>');
+            
+            var divElBody = $('<div>');
 			divElBody.attr('class', 'card-body');
 			divEl.append(divElBody);
-
-		var divElIcon = $('<img>');
+            
+            var divElIcon = $('<img>');
 			divElIcon.attr('class', 'icons');
 			divElIcon.attr('src', "https://openweathermap.org/img/wn/"+data.list[i].weather[0].icon+"@2x.png");
 			divElBody.append(divElIcon);
+            
+            // Display date on forecast Card
+            divElHeader.append('<h4 class="date-header">' + forecastDate) + '</h4>';
+            
+            // Display Temp on forecast Card
+            divElBody.append("<li>" + "Temperature: " + data.list[i].main.temp + "°F" + "</li>")
+            
+            // Display Feels Like on forecast Card
+            divElBody.append("<li>" + "Feels Like: " + data.list[i].main.feels_like + "°F" + "</li>");
+            
+            // Display Humidity on forecast Card
+            divElBody.append("<li>" + "Humidity: " + data.list[i].main.humidity + "%" + "</li>");
+            
+            // Display Wind Speed on Forecast Card
+            divElBody.append("<li>" + "Wind Speed: " + data.list[i].wind.speed + "mph" + "</li>");
+            
+        } 
+    }
+    )}
+    
+    // Save text value of search and save it into local storage within the Array
+    searchBtn.on('click', function(event){
+        event.preventDefault();
+        var city=document.querySelector('#city');
+        // var savedCity=document.querySelector('.textVal').value;
+        // console.log({city})
+        // city.textContent=savedCity;
         
-        // Display date on forecast Card
-        divElHeader.append('<h4 class="date-header">' + forecastDate) + '</h4>';
-
-        // Display Temp on forecast Card
-        divElBody.append("<li>" + "Temperature: " + data.list[i].main.temp + "°F" + "</li>")
-
-        // Display Feels Like on forecast Card
-        divElBody.append("<li>" + "Feels Like: " + data.list[i].main.feels_like + "°F" + "</li>");
-
-        // Display Humidity on forecast Card
-        divElBody.append("<li>" + "Humidity: " + data.list[i].main.humidity + "%" + "</li>");
-
-        // Display Wind Speed on Forecast Card
-        divElBody.append("<li>" + "Wind Speed: " + data.list[i].wind.speed + "mph" + "</li>");
-
-    } 
-    }
-)}
-
-// Save text value of search and save it into local storage within the Array
-searchBtn.on('click', function(event){
-    event.preventDefault();
-    var city=document.querySelector('#city');
-    // var savedCity=document.querySelector('.textVal').value;
-    // console.log({city})
-    // city.textContent=savedCity;
-
-    // if (city===""){
-    //     return;
-    // } 
-    cityHistArr.push(city.value);
-    localStorage.setItem('city', JSON.stringify(cityHistArr));
-    savedHistory();
-    // console.log(city.value)
-    getWeatherInfo(city.value);
-}) 
-
-// Saved History button Function defined
-function savedHistoryBtn(event){
-    // console.log(event.target.textContent);
-    getWeatherInfo(event.target.textContent);
-}
-
-// Create buttons from saved text value that also acts as a search button based on history search
-var cityHistEl=$('.city-history');
-function savedHistory(){
-    cityHistEl.empty();
-
-    var savedHist=localStorage.getItem("city");
-    // console.log(savedHist);
-    savedHist=JSON.parse(savedHist);
-
-    for (i=0; i<cityHistArr.length; i++){
-        // console.log(savedHist[i]);
-        cityHistEl.append('<li><button class="btnHist">' + savedHist[i] + "</button></li>");
-    }
-
-    // Created Variable selecting all buttons made in append.
-    var btnHist=$('.btnHist');
-
-    // event listener that runs btn click function
-    btnHist.on('click', savedHistoryBtn);
-}
+        // if (city===""){
+            //     return;
+            // } 
+            cityHistArr.push(city.value);
+            localStorage.setItem('city', JSON.stringify(cityHistArr));
+            savedHistory();
+            // console.log(city.value)
+            getWeatherInfo(city.value);
+        }) 
+        
+        // Saved History button Function defined
+        function savedHistoryBtn(event){
+            // console.log(event.target.textContent);
+            getWeatherInfo(event.target.textContent);
+        }
+        
+        // Create buttons from saved text value that also acts as a search button based on history search
+        var cityHistEl=$('.city-history');
+        function savedHistory(){
+            cityHistEl.empty();
+            
+            var savedHist=localStorage.getItem("city");
+            // console.log(savedHist);
+            savedHist=JSON.parse(savedHist);
+            
+            for (i=0; i<cityHistArr.length; i++){
+                // console.log(savedHist[i]);
+                cityHistEl.append('<li><button class="btnHist">' + savedHist[i] + "</button></li>");
+            }
+            
+            // Created Variable selecting all buttons made in append.
+            var btnHist=$('.btnHist');
+            
+            // event listener that runs btn click function
+            btnHist.on('click', savedHistoryBtn);
+        }
+        
+        // define a ready function for a default city to be displayed
+        $(document).ready(function(){
+            var defaultCity = "Aurora";
+            getWeatherInfo(defaultCity);
+        })
