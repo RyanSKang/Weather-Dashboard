@@ -18,7 +18,7 @@ var cardbody=$('.weatherInfo');
 // Display the weather data to main Today cardbody and display five day forecast
 
 function getWeatherInfo(city){
-    var getCurrentLocationURL= "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=5&appid="+key;
+    var getCurrentLocationURL= "https://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=5&appid="+key;
     var cityName=$('.cityName')
     
     // Fetching Geolocation API
