@@ -1,7 +1,7 @@
 /* General styling */
 /* Background Img */
 body{
-    background-image: url("/Assets/Photos/mountain-background.jpeg");
+    background-image: url("https://raw.githubusercontent.com/RyanSKang/Weather-Dashboard/main/Assets/Photos/mountain-background.jpeg");
     background-size:cover;
     background-repeat: no-repeat;
     width: 100%;
