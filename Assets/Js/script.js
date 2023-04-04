@@ -93,7 +93,7 @@ function getFiveDayForecast(city){
         
         // Increment of 8 for loop gave me consistent data taken at 12:00:00 time for each day
         
-        for(i=3; i<=39; i+=8){
+        for(i=9; i<=39; i+=8){
             
             var forecastDate=data.list[i].dt_txt.split(' ')[0];
             forecastDate=dayjs(forecastDate).format('MMMM D, YYYY');
