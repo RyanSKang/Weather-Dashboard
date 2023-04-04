@@ -26,12 +26,12 @@ body{
    margin-left: 2%;
  }
  .search-input input{
-    background-color: #000000;
+    background-color:rgb(0,0,0,.45);
     color: beige;
  }
  .search-input button{
     padding-right: 15px;
-    padding-top: 10px;
+    padding-top: 12px;
     background-color: rgb(32, 103, 203);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -47,7 +47,20 @@ body{
     color: beige;
     margin-left: 5%;
  }
- 
+ .city-history li{
+   list-style-type: none;
+   font-size: 20px;
+}
+.column1 .city-history button{
+   padding-right: 40px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   padding-left: 40px;
+   background-color: rgb(0,0,0,.4);
+   font-weight:400;
+   color: beige;
+ }
+
 
  /* Main Weather Card */
  .mainWeather{
@@ -55,6 +68,36 @@ body{
    backdrop-filter: blur(14px);
    color: beige;
    text-align: left;
-   padding: 50px;
-   margin-top: 2%;
+   padding: 15px;
+   margin-top: 1%;
+   height: 27rem;
  }
+ .cardToday .weatherInfo{
+   display:inline-block;
+   line-height: 1.8;
+
+ }
+ .cardToday li{
+   list-style-type: none;
+ }
+ .cardToday .icons{
+   width:100px;
+   display: flex;
+   justify-content: center;
+ }
+ 
+ /* Five day Forecast Cards */
+.five-day-forecast{
+   justify-content:space-around;
+   text-align: left;
+}
+.five-day-forecast .fiveDayForecastCards{
+   background-color: rgb(0,0,0,.2);
+   backdrop-filter: blur(14px);
+   padding-right: 25px;
+   color: beige;
+}
+.five-day-forecast .fiveDayForecastCards li{
+list-style-type: none;
+display: block;
+}
