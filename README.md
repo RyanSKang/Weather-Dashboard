@@ -8,7 +8,7 @@ Creating a Weather Dashboard was very challenging. I had a lot of trouble unders
 
 No Installation required but you can access my deployed application via this link: 
 
-<a href=" https://ryanskang.github.io/Weather-Dashboard/" target="_blank">Weather Dashboard</a>
+<a href="https://ryanskang.github.io/Weather-Dashboard/" target="_blank">Weather Dashboard</a>
 
 ## Usage
 
